@@ -16,7 +16,7 @@ export default (env: EnvVariable) => {
 
 	const config: webpack.Configuration = {
 		mode: env.mode ?? 'development',
-		entry: path.resolve(__dirname, 'src', 'index.ts'),
+		entry: path.resolve(__dirname, 'src', 'index.tsx'),
 		output: {
 			path: path.resolve(__dirname, 'build'),
 			filename: '[name].[contenthash].js',
@@ -29,6 +29,7 @@ export default (env: EnvVariable) => {
 		module: {
 			rules: [
 				{
+					//ts-loader умеет работать с jsx
 					test: /\.tsx?$/,
 					use: 'ts-loader',
 					exclude: /node_modules/,
@@ -39,6 +40,8 @@ export default (env: EnvVariable) => {
 			extensions: ['.tsx', '.ts', '.js'],
 		},
 		//Исходная карта кода
+		//Запуск с указанием порта
+		// npm run start -- --env port=5000
 		devtool: isDev ? 'inline-source-map' : false,
 		devServer: isDev ? {
 			port: env.port ?? 3000,

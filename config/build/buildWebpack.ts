@@ -21,7 +21,7 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
 		module: {
 			rules: buildLoaders(options),
 		},
-		resolve: buildResolvers(),
+		resolve: buildResolvers(options),
 		//Исходная карта кода
 		//Запуск с указанием порта
 		// npm run start -- --env port=5000

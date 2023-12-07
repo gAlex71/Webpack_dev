@@ -32,5 +32,29 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 			use: 'ts-loader',
 			exclude: /node_modules/,
 		},
+		{
+			test: /\.(png|jpg|jpeg|gif)$/i,
+			type: 'asset/resource',
+		},
+		{
+			test: /\.svg$/i,
+			// issuer: /\.[jt]sx?$/,
+			use: [{
+				loader: '@svgr/webpack', 
+				options: {
+					icon: true,
+					svgoConfig: {
+						plugins: [
+							{
+								name: 'convertColors',
+								params: {
+									currentColor: true
+								}
+							}
+						]
+					}
+				}
+			}],
+		}
 	];
 }

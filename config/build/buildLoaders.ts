@@ -1,6 +1,7 @@
 import { ModuleOptions } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BuildOptions } from './types/types';
+import ReactRefreshTypeScript from 'react-refresh-typescript';
 
 export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 	//Для оптимизации в разных сборках можно использовать переменные
@@ -28,9 +29,22 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 		},
 		{
 			//ts-loader умеет работать с jsx
+			//Без ts нужен babel-loader
 			test: /\.tsx?$/,
-			use: 'ts-loader',
 			exclude: /node_modules/,
+			use: [
+				{
+					loader: 'ts-loader',
+					options: {
+						//Отключаем проверку на типизацию при сборке
+						transpileOnly: isDev,
+						//Позволяет делать изменения в проекте без перезагрузки страницы
+						getCustomTransformers: () => ({
+							before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+						}),
+					},
+				},
+			],
 		},
 		{
 			test: /\.(png|jpg|jpeg|gif)$/i,
@@ -39,22 +53,24 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 		{
 			test: /\.svg$/i,
 			// issuer: /\.[jt]sx?$/,
-			use: [{
-				loader: '@svgr/webpack', 
-				options: {
-					icon: true,
-					svgoConfig: {
-						plugins: [
-							{
-								name: 'convertColors',
-								params: {
-									currentColor: true
-								}
-							}
-						]
-					}
-				}
-			}],
-		}
+			use: [
+				{
+					loader: '@svgr/webpack',
+					options: {
+						icon: true,
+						svgoConfig: {
+							plugins: [
+								{
+									name: 'convertColors',
+									params: {
+										currentColor: true,
+									},
+								},
+							],
+						},
+					},
+				},
+			],
+		},
 	];
 }

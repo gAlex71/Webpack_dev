@@ -1,5 +1,5 @@
 import path from 'path';
-import webpack, { Configuration } from "webpack";
+import webpack, { Configuration, DefinePlugin } from "webpack";
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BuildOptions } from './types/types';
@@ -17,6 +17,7 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
             filename: 'css/[name].[contenthash:8].css',
             chunkFilename: 'css/[name].[contenthash:8].css'
         }),
-        isProd && new BundleAnalyzerPlugin()
+        isProd && new BundleAnalyzerPlugin(),
+        new DefinePlugin({_PLATFORM_: JSON.stringify(options.platform)})
     ].filter(Boolean)
 }

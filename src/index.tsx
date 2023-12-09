@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LazyAbout } from '@/pages/about/About.lazy';
 import { LazyShop } from '@/pages/shop/Shop.lazy';
 import { Suspense } from 'react';
-
+2.38
 const root = document.getElementById('root');
 
 if(!root) {

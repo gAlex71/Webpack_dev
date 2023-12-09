@@ -3,6 +3,8 @@
 /.pnp
 .pnp.js
 
+/example_monorepo/node_modules
+
 # testing
 /coverage
 

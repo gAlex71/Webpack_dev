@@ -3,7 +3,7 @@
 import { Outlet, Link } from 'react-router-dom';
 // import iconPng from '@/assets/win_p.png';
 // import WindowSvg from '@/assets/win_s.svg';
-3.00.10
+
 export const App = () => {
 	// const [count, setCount] = useState<number>(0);
 

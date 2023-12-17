@@ -14,7 +14,7 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
     const isProd = options.mode === 'production';
 
     return [
-        new HtmlWebpackPlugin({ template: options.paths.html, favicon: path.resolve(options.paths.public, 'myFav.png') }),
+        new HtmlWebpackPlugin({ template: options.paths.html, favicon: path.resolve(options.paths.public, 'myFav.png'), publicPath: '/' }),
         isDev && new webpack.ProgressPlugin(),
         isProd && new MiniCssExtractPlugin({
             filename: 'css/[name].[contenthash:8].css',
